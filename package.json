@@ -10,7 +10,8 @@
   "exports": {
     "./lib/*": "./lib/*.js",
     "./redux/*": "./redux/*.js",
-    "./views/*": "./views/*.js"
+    "./views/*": "./views/*.js",
+    "./navigators/*": "./navigators/*.js"
   },
   "dependencies": {
     "@mod/mobile-common": "file:../mod-mobile-common",
