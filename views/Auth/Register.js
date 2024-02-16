@@ -37,15 +37,14 @@ const RegisterScreen = () => {
         value={data.password}
         onChangeText={(value) => onChange({ name: 'password', value })}
       />
-      <View style={tw`flex-row justify-center mt-4`}>
-        <TouchableOpacity onPress={() => handleRegister()}>
+
+        <TouchableOpacity style={tw`flex-row justify-center mt-4 bg-indigo-600 rounded-lg`} onPress={() => handleRegister()}>
           <Text
-            style={tw`px-4 py-2 text-white text-xl font-medium bg-indigo-600 rounded-lg`}
+            style={tw`px-4 py-2 text-white text-xl font-medium`}
           >
             {t('utils.signUp')}
           </Text>
         </TouchableOpacity>
-      </View>
       <SuccessOrError message={message} />
     </View>
   )

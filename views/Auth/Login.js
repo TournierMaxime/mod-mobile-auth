@@ -93,19 +93,19 @@ const LoginScreen = () => {
             <Message priority={'error'} message={googleMessage.error} />
           ) : null}
 
-          <View style={tw`mt-10 items-center`}>
-            <TouchableOpacity onPress={handleLogin}>
+        
+            <TouchableOpacity style={tw`flex-row justify-center mt-10 bg-indigo-600 rounded-lg`} onPress={handleLogin}>
               {loading ? (
                 <ActivityIndicator size={'large'} />
               ) : (
                 <Text
-                  style={tw`px-4 py-2 text-white text-xl font-medium bg-indigo-600 rounded-lg`}
+                  style={tw`px-4 py-2 text-white text-xl font-medium`}
                 >
                   {t('utils.signIn')}
                 </Text>
               )}
             </TouchableOpacity>
-          </View>
+          
         </View>
 
         <View>

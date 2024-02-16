@@ -28,9 +28,9 @@ const ConfirmEmail = ({ route }) => {
         keyboardType='numeric'
         maxLength={6}
       />
-        <TouchableOpacity style={tw`flex-row justify-center my-4`} onPress={handleConfirmEmail}>
+        <TouchableOpacity style={tw`flex-row justify-center my-4 bg-indigo-600 rounded-lg`} onPress={handleConfirmEmail}>
           <Text
-            style={tw`px-4 py-2 text-white text-xl font-medium bg-indigo-600 rounded-lg`}
+            style={tw`px-4 py-2 text-white text-xl font-medium`}
           >
             {t('utils.confirm')}
           </Text>

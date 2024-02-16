@@ -16,7 +16,7 @@ const ForgetPasswordScreen = () => {
     handleForgetPassword,
     handleResetPassword,
     message,
-    step
+    step,
   } = useHandleForgetPassword()
 
   const { onChange } = useOnChange({ data, setData })
@@ -35,19 +35,15 @@ const ForgetPasswordScreen = () => {
               value={data.email}
               onChangeText={(value) => onChange({ name: 'email', value })}
             />
-            <View style={tw`flex-row justify-center`}>
-              <TouchableOpacity
-                style={[
-                  tw`mt-4 px-4 py-2 rounded-md items-center mr-4 w-auto`,
-                  { backgroundColor: '#22C55E' },
-                ]}
-                onPress={handleForgetPassword}
-              >
-                <Text style={tw`text-white font-medium text-lg`}>
-                  {t('utils.confirm')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+
+            <TouchableOpacity
+              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              onPress={handleForgetPassword}
+            >
+              <Text style={tw`text-white font-medium text-lg`}>
+                {t('utils.confirm')}
+              </Text>
+            </TouchableOpacity>
 
             <SuccessOrError message={message} />
           </View>
@@ -67,19 +63,16 @@ const ForgetPasswordScreen = () => {
                 onChange({ name: 'code', value: Number(value) })
               }
             />
-            <View style={tw`flex-row justify-center`}>
-              <TouchableOpacity
-                style={[
-                  tw`mt-4 px-4 py-2 rounded-md items-center mr-4 w-auto`,
-                  { backgroundColor: '#22C55E' },
-                ]}
-                onPress={handleCheckForgetPasswordCode}
-              >
-                <Text style={tw`text-white font-medium text-lg`}>
-                  {t('utils.confirm')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+
+            <TouchableOpacity
+              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              onPress={handleCheckForgetPasswordCode}
+            >
+              <Text style={tw`text-white font-medium text-lg`}>
+                {t('utils.confirm')}
+              </Text>
+            </TouchableOpacity>
+
             <SuccessOrError message={message} />
           </View>
         )}
@@ -105,27 +98,21 @@ const ForgetPasswordScreen = () => {
                 onChange({ name: 'confirmPassword', value })
               }
             />
-            <View style={tw`flex-row justify-center`}>
-              <TouchableOpacity
-                style={[
-                  tw`mt-4 px-4 py-2 rounded-md items-center mr-4 w-auto`,
-                  { backgroundColor: '#22C55E' },
-                ]}
-                onPress={handleResetPassword}
-              >
-                <Text style={tw`text-white font-medium text-lg`}>
-                  {t('utils.confirm')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+
+            <TouchableOpacity
+              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              onPress={handleResetPassword}
+            >
+              <Text style={tw`text-white font-medium text-lg`}>
+                {t('utils.confirm')}
+              </Text>
+            </TouchableOpacity>
+
             <SuccessOrError message={message} />
           </View>
         )}
         {step === 4 && (
           <View style={tw`bg-white p-4 rounded-md h-full`}>
-            <Text style={tw`font-medium text-lg mb-4`}>
-              {t('actions.yourPasswordHasBeenSuccessfullyReset')}
-            </Text>
             <SuccessOrError message={message} />
           </View>
         )}
