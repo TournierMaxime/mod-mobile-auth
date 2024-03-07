@@ -26,7 +26,7 @@ const loginUser = (data) => async (dispatch) => {
   }
 }
 
-const logoutUser = () => async (dispatch) => {
+const logoutUser = () => (dispatch) => {
   try {
     dispatch({ type: 'LOGOUT_USER_REQUEST' })
     const response = Logout()
