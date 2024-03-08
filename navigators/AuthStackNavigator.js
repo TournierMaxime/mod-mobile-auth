@@ -5,7 +5,6 @@ import Login from '@mod/mobile-auth/views/Auth/Login'
 import Register from '@mod/mobile-auth/views/Auth/Register'
 import ForgetPassword from '@mod/mobile-auth/views/Auth/ForgetPassword'
 import ConfirmEmail from '@mod/mobile-auth/views/Auth/ConfirmEmail'
-import getCommonScreens from '../../../navigators/getCommonScreens.js'
 
 const AuthStack = createNativeStackNavigator()
 
@@ -18,12 +17,11 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
         },
       }}
     >
-      {getCommonScreens(AuthStack, isAuthenticated, i18n, t)}
       <AuthStack.Screen
         name='Login'
         options={() => ({
           header: () => (
-            <Header isAuthenticated={isAuthenticated} backButton={false} />
+            <Header isAuthenticated={isAuthenticated} backButton={false} title={t('utils.signIn')} />
           ),
         })}
       >
@@ -33,7 +31,7 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
         name='Register'
         options={() => ({
           header: () => (
-            <Header isAuthenticated={isAuthenticated} backButton={true} />
+            <Header isAuthenticated={isAuthenticated} backButton={true} title={t('utils.signUp')} />
           ),
         })}
       >
@@ -43,7 +41,7 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
         name='ForgetPassword'
         options={() => ({
           header: () => (
-            <Header isAuthenticated={isAuthenticated} backButton={true} />
+            <Header isAuthenticated={isAuthenticated} backButton={true} title={t('utils.forgotYourPassword')} />
           ),
         })}
       >
@@ -53,7 +51,7 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
         name='ConfirmEmail'
         options={() => ({
           header: () => (
-            <Header isAuthenticated={isAuthenticated} backButton={false} />
+            <Header isAuthenticated={isAuthenticated} backButton={false} title={t('utils.confirm') + " Email"} />
           ),
         })}
       >
