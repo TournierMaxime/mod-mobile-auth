@@ -18,6 +18,9 @@ import useHandleLogin from "../../lib/hooks/auth/useHandleLogin"
 import useHandleAuthGoogle from "../../lib/hooks/auth/useHandleAuthGoogle"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
+import Utils from "@mod/mobile-common/lib/class/Utils"
+import * as AppleAuthentication from "expo-apple-authentication"
+import useHandleAuthApple from "../../lib/hooks/auth/useHandleAuthApple"
 
 const LoginScreen = () => {
   const navigation = useNavigation()
@@ -25,6 +28,9 @@ const LoginScreen = () => {
   const { i18n, t } = useTranslation()
 
   const { handleLogin, data, setData, message } = useHandleLogin({ navigation })
+
+  const { onAppleButtonPress, appleMessage, isProcessingApple } =
+    useHandleAuthApple({ i18n, navigation })
 
   const { loginWithGoogle, googleMessage, isProcessing } = useHandleAuthGoogle({
     i18n,
@@ -46,10 +52,12 @@ const LoginScreen = () => {
         {isProcessing ? (
           <View style={tw`flex justify-center items-center`}>
             <ActivityIndicator size={"large"} />
-            <Message
-              priority={"info"}
-              message={"Wait we are connecting to your Google account"}
-            />
+            <Message priority={"info"} message={googleMessage.info} />
+          </View>
+        ) : isProcessingApple ? (
+          <View style={tw`flex justify-center items-center`}>
+            <ActivityIndicator size={"large"} />
+            <Message priority={"info"} message={appleMessage.info} />
           </View>
         ) : (
           <Fragment>
@@ -98,6 +106,10 @@ const LoginScreen = () => {
                 <Message priority={"error"} message={googleMessage.error} />
               ) : null}
 
+              {appleMessage.error ? (
+                <Message priority={"error"} message={appleMessage.error} />
+              ) : null}
+
               <View>
                 <TouchableOpacity onPress={handleForgetPassword}>
                   <Text
@@ -135,6 +147,23 @@ const LoginScreen = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+            {Platform.OS === "ios" ? (
+              <View
+                style={tw`flex flex-row mt-4 w-10/12 flex-row justify-center mt-4 border border-slate-200 bg-white rounded-lg`}
+              >
+                <AppleAuthentication.AppleAuthenticationButton
+                  buttonType={
+                    AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                  }
+                  buttonStyle={
+                    AppleAuthentication.AppleAuthenticationButtonStyle
+                      .WHITE_OUTLINE
+                  }
+                  style={tw`w-full h-12 flex flex-row items-center px-8 py-2.5 rounded-lg`}
+                  onPress={() => onAppleButtonPress()}
+                />
+              </View>
+            ) : null}
           </Fragment>
         )}
       </View>

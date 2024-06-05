@@ -2,14 +2,16 @@ import {
   authReducer,
   confirmEmailReducer,
   passwordReducer,
-  registerUserReducer
-} from './reducers/auth'
+  registerUserReducer,
+  verifyAppleTokenReducer,
+} from "./reducers/auth"
 
 const authCommonReducer = {
   auth: authReducer,
   register: registerUserReducer,
   password: passwordReducer,
-  confirmEmail: confirmEmailReducer
+  confirmEmail: confirmEmailReducer,
+  verifyAppleToken: verifyAppleTokenReducer,
 }
 
 export { authCommonReducer }

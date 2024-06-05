@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const initialState = {
   isAuthenticated: false,
@@ -9,58 +9,58 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_USER_REQUEST':
+    case "LOGIN_USER_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'LOGIN_USER_SUCCESS':
-      AsyncStorage.setItem('userData', JSON.stringify(action.payload))
+    case "LOGIN_USER_SUCCESS":
+      AsyncStorage.setItem("userData", JSON.stringify(action.payload))
       return {
         ...state,
         data: action.payload,
         isAuthenticated: true,
         isLoading: false,
       }
-    case 'LOGIN_USER_FAILURE':
-      AsyncStorage.setItem('userData', JSON.stringify(action.payload))
+    case "LOGIN_USER_FAILURE":
+      AsyncStorage.setItem("userData", JSON.stringify(action.payload))
       return {
         ...state,
         error: action.payload,
         isAuthenticated: false,
         isLoading: false,
       }
-    case 'LOGOUT_USER_REQUEST':
+    case "LOGOUT_USER_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'LOGOUT_USER_SUCCESS':
-      AsyncStorage.removeItem('userData')
+    case "LOGOUT_USER_SUCCESS":
+      AsyncStorage.removeItem("userData")
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
       }
-    case 'LOGOUT_USER_FAILURE':
-      AsyncStorage.removeItem('userData')
+    case "LOGOUT_USER_FAILURE":
+      AsyncStorage.removeItem("userData")
       return {
         ...state,
         error: action.payload,
         isLoading: false,
       }
-    case 'SET_USER_LOCALSTORAGE_REQUEST':
+    case "SET_USER_LOCALSTORAGE_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'SET_USER_LOCALSTORAGE_SUCCESS':
+    case "SET_USER_LOCALSTORAGE_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'SET_USER_LOCALSTORAGE_FAILURE':
+    case "SET_USER_LOCALSTORAGE_FAILURE":
       return {
         ...state,
         error: action.payload,
@@ -73,18 +73,42 @@ const authReducer = (state = initialState, action) => {
 
 const confirmEmailReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'CONFIRM_EMAIL_REQUEST':
+    case "CONFIRM_EMAIL_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'CONFIRM_EMAIL_SUCCESS':
+    case "CONFIRM_EMAIL_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'CONFIRM_EMAIL_FAILURE':
+    case "CONFIRM_EMAIL_FAILURE":
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      }
+    default:
+      return state
+  }
+}
+
+const verifyAppleTokenReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "VERIFY_APPLE_TOKEN_REQUEST":
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case "VERIFY_APPLE_TOKEN_SUCCESS":
+      return {
+        ...state,
+        data: action.payload,
+        isLoading: false,
+      }
+    case "VERIFY_APPLE_TOKEN_FAILURE":
       return {
         ...state,
         error: action.payload,
@@ -97,52 +121,52 @@ const confirmEmailReducer = (state = initialState, action) => {
 
 const passwordReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FORGET_PASSWORD_REQUEST':
+    case "FORGET_PASSWORD_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'FORGET_PASSWORD_SUCCESS':
+    case "FORGET_PASSWORD_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'FORGET_PASSWORD_FAILURE':
+    case "FORGET_PASSWORD_FAILURE":
       return {
         ...state,
         error: action.payload,
         isLoading: false,
       }
-    case 'CHECK_FORGET_PASSWORD_CODE_REQUEST':
+    case "CHECK_FORGET_PASSWORD_CODE_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'CHECK_FORGET_PASSWORD_CODE_SUCCESS':
+    case "CHECK_FORGET_PASSWORD_CODE_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'CHECK_FORGET_PASSWORD_CODE_FAILURE':
+    case "CHECK_FORGET_PASSWORD_CODE_FAILURE":
       return {
         ...state,
         error: action.payload,
         isLoading: false,
       }
-    case 'RESET_PASSWORD_REQUEST':
+    case "RESET_PASSWORD_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'RESET_PASSWORD_SUCCESS':
+    case "RESET_PASSWORD_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'RESET_PASSWORD_FAILURE':
+    case "RESET_PASSWORD_FAILURE":
       return {
         ...state,
         error: action.payload,
@@ -155,18 +179,18 @@ const passwordReducer = (state = initialState, action) => {
 
 const registerUserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REGISTER_USER_REQUEST':
+    case "REGISTER_USER_REQUEST":
       return {
         ...state,
         isLoading: true,
       }
-    case 'REGISTER_USER_SUCCESS':
+    case "REGISTER_USER_SUCCESS":
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       }
-    case 'REGISTER_USER_FAILURE':
+    case "REGISTER_USER_FAILURE":
       return {
         ...state,
         error: action.payload,
@@ -182,4 +206,5 @@ export {
   confirmEmailReducer,
   passwordReducer,
   registerUserReducer,
+  verifyAppleTokenReducer,
 }
