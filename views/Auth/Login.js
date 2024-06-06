@@ -13,14 +13,15 @@ import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import tw from "twrnc"
 import GoogleSVG from "../../../../assets/images/GoogleSVG"
+import AppleSVG from "../../../../assets/icon/AppleSVG"
 import Message from "@mod/mobile-common/lib/components/utils/Message"
 import useHandleLogin from "../../lib/hooks/auth/useHandleLogin"
 import useHandleAuthGoogle from "../../lib/hooks/auth/useHandleAuthGoogle"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import Utils from "@mod/mobile-common/lib/class/Utils"
-import * as AppleAuthentication from "expo-apple-authentication"
 import useHandleAuthApple from "../../lib/hooks/auth/useHandleAuthApple"
+import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
 
 const LoginScreen = () => {
   const navigation = useNavigation()
@@ -28,6 +29,15 @@ const LoginScreen = () => {
   const { i18n, t } = useTranslation()
 
   const { handleLogin, data, setData, message } = useHandleLogin({ navigation })
+
+  const {
+    fontSize,
+    notRegistered,
+    forgotYourPassword,
+    widthAspectRatio,
+    placeholder,
+    btnSubmit,
+  } = useResponsive()
 
   const { onAppleButtonPress, appleMessage, isProcessingApple } =
     useHandleAuthApple({ i18n, navigation })
@@ -64,38 +74,36 @@ const LoginScreen = () => {
             <View style={tw`mt-5 items-center`}>
               <View style={Platform.OS === "ios" ? tw`mt-4` : null}>
                 <Image
-                  style={[tw`w-30 h-15`, { resizeMode: "contain" }]}
+                  style={{
+                    resizeMode: "contain",
+                    width: Utils.moderateScale(280),
+                    height: Utils.moderateScale(80),
+                  }}
                   source={require("../../../../assets/images/videotek_logo.webp")}
                 />
               </View>
               <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                <Text
-                  style={tw`font-medium text-base text-center my-2 text-indigo-600 ${text}`}
-                >
+                <Text style={notRegistered(text)}>
                   {t("utils.notRegistered")}
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <View style={tw`w-10/12`}>
-              <Text style={tw`font-medium text-lg ${text}`}>
-                {t("utils.email")}
-              </Text>
+            <View style={widthAspectRatio()}>
+              <Text style={fontSize(text)}>{t("utils.email")}</Text>
               <TextInput
                 placeholder={t("utils.email")}
                 onChangeText={(text) => setData({ ...data, email: text })}
                 value={data.email}
-                style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+                style={placeholder()}
               />
-              <Text style={tw`font-medium text-lg mt-2 ${text}`}>
-                {t("utils.password")}
-              </Text>
+              <Text style={fontSize(text)}>{t("utils.password")}</Text>
               <TextInput
                 placeholder={t("utils.password")}
                 onChangeText={(text) => setData({ ...data, password: text })}
                 value={data.password}
                 secureTextEntry={true}
-                style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+                style={placeholder()}
               />
 
               {message.error ? (
@@ -110,58 +118,53 @@ const LoginScreen = () => {
                 <Message priority={"error"} message={appleMessage.error} />
               ) : null}
 
-              <View>
-                <TouchableOpacity onPress={handleForgetPassword}>
-                  <Text
-                    style={tw`mt-4 text-base font-medium text-indigo-600 text-center ${text}`}
-                  >
-                    {t("utils.forgotYourPassword")}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity onPress={handleForgetPassword}>
+                <Text style={forgotYourPassword(text)}>
+                  {t("utils.forgotYourPassword")}
+                </Text>
+              </TouchableOpacity>
 
               <TouchableOpacity
-                style={tw`flex-row justify-center mt-4 bg-indigo-600 rounded-lg`}
+                style={tw`flex-row justify-center mt-4 mb-8 bg-indigo-600 rounded-lg`}
                 onPress={handleLogin}
               >
                 {loading ? (
                   <ActivityIndicator size={"large"} />
                 ) : (
-                  <Text style={tw`px-4 py-2 text-white text-xl font-medium`}>
-                    {t("utils.signIn")}
-                  </Text>
+                  <Text style={btnSubmit()}>{t("utils.signIn")}</Text>
                 )}
               </TouchableOpacity>
             </View>
-
-            <View
-              style={tw`flex flex-row mt-4 w-10/12 flex-row justify-center mt-4 border border-slate-200 bg-white rounded-lg`}
-            >
-              <TouchableOpacity
-                style={tw`flex flex-row items-center px-8 py-2.5 rounded-lg`}
-                onPress={() => loginWithGoogle()}
+            <View style={widthAspectRatio()}>
+              <View
+                style={tw`flex flex-row mt-4 flex-row justify-center mt-4 border border-gray-600 bg-white rounded-md`}
               >
-                <GoogleSVG />
-                <Text style={tw`ml-2`}>
-                  {t("utils.continueWithGoogle")} Google
-                </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={tw`flex flex-row items-center px-8 py-2.5 rounded-lg`}
+                  onPress={() => loginWithGoogle()}
+                >
+                  <GoogleSVG />
+                  <Text style={fontSize(text)}>
+                    {t("utils.continueWith")} Google
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             {Platform.OS === "ios" ? (
-              <View
-                style={tw`flex flex-row mt-4 w-10/12 flex-row justify-center mt-4 border border-slate-200 bg-white rounded-lg`}
-              >
-                <AppleAuthentication.AppleAuthenticationButton
-                  buttonType={
-                    AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-                  }
-                  buttonStyle={
-                    AppleAuthentication.AppleAuthenticationButtonStyle
-                      .WHITE_OUTLINE
-                  }
-                  style={tw`w-full h-12 flex flex-row items-center px-8 py-2.5 rounded-lg`}
-                  onPress={() => onAppleButtonPress()}
-                />
+              <View style={widthAspectRatio()}>
+                <View
+                  style={tw`flex flex-row mt-4 flex-row justify-center mt-4 border border-gray-600 bg-white rounded-md`}
+                >
+                  <TouchableOpacity
+                    style={tw`flex flex-row items-center px-8 py-2.5 rounded-lg`}
+                    onPress={() => onAppleButtonPress()}
+                  >
+                    <AppleSVG />
+                    <Text style={fontSize(text)}>
+                      {t("utils.continueWith")} Apple
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ) : null}
           </Fragment>

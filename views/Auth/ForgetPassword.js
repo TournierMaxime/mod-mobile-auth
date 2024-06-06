@@ -7,6 +7,7 @@ import useOnChange from "@mod/mobile-common/lib/hooks/utils/useOnChange"
 import SuccessOrError from "@mod/mobile-common/lib/components/utils/SuccessOrError"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
+import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
 
 const ForgetPasswordScreen = () => {
   const { t } = useTranslation()
@@ -26,28 +27,28 @@ const ForgetPasswordScreen = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { background, text } = useDynamicThemeStyles(darkMode)
 
+  const { fontSize, widthAspectRatio, placeholder, btnSubmit } = useResponsive()
+
   return (
-    <View>
-      <View>
+    <View style={tw`items-center`}>
+      <View style={widthAspectRatio()}>
         {step === 1 && (
-          <View style={tw`${background} p-4 h-full`}>
-            <Text style={tw`font-medium text-lg mt-2 ${text}`}>
+          <View style={tw`${background} p-4 h-full mb-2`}>
+            <Text style={fontSize(text)}>
               {t("utils.enterYourEmailAddress")}
             </Text>
             <TextInput
-              style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+              style={placeholder()}
               placeholder={t("utils.email")}
               value={data.email}
               onChangeText={(value) => onChange({ name: "email", value })}
             />
 
             <TouchableOpacity
-              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              style={tw`flex-row justify-center mt-4 mb-8 bg-indigo-600 rounded-lg`}
               onPress={handleForgetPassword}
             >
-              <Text style={tw`text-white font-medium text-lg`}>
-                {t("utils.confirm")}
-              </Text>
+              <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
 
             <SuccessOrError message={message} />
@@ -55,12 +56,12 @@ const ForgetPasswordScreen = () => {
         )}
         {step === 2 && (
           <View style={tw`${background} p-4 rounded-md h-full`}>
-            <Text style={tw`font-medium text-lg mt-2 ${text}`}>
+            <Text style={fontSize(text)}>
               {t("utils.enterYourVerificationCode")}
             </Text>
             <TextInput
               placeholder={t("utils.verificationCode")}
-              style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+              style={placeholder()}
               value={data.code}
               maxLength={6}
               keyboardType="numeric"
@@ -70,12 +71,10 @@ const ForgetPasswordScreen = () => {
             />
 
             <TouchableOpacity
-              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              style={tw`flex-row justify-center mt-4 mb-8 bg-indigo-600 rounded-lg`}
               onPress={handleCheckForgetPasswordCode}
             >
-              <Text style={tw`text-white font-medium text-lg`}>
-                {t("utils.confirm")}
-              </Text>
+              <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
 
             <SuccessOrError message={message} />
@@ -84,18 +83,18 @@ const ForgetPasswordScreen = () => {
 
         {step === 3 && (
           <View style={tw`${background} p-4 rounded-md h-full`}>
-            <Text style={tw`font-medium text-lg mt-2 ${text}`}>
+            <Text style={fontSize(text)}>
               {t("utils.enterYourNewPassword")}
             </Text>
             <TextInput
-              style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+              style={placeholder()}
               placeholder={t("utils.password")}
               secureTextEntry={true}
               value={data.password}
               onChangeText={(value) => onChange({ name: "password", value })}
             />
             <TextInput
-              style={tw`mt-2 px-3 py-2 text-gray-500 text-lg bg-slate-100 rounded-md`}
+              style={placeholder()}
               placeholder={t("utils.confirmYourPassword")}
               secureTextEntry={true}
               value={data.confirmPassword}
@@ -105,12 +104,10 @@ const ForgetPasswordScreen = () => {
             />
 
             <TouchableOpacity
-              style={tw`mt-4 px-4 py-2 rounded-md flex-row justify-center items-center bg-indigo-600 rounded-lg`}
+              style={tw`flex-row justify-center mt-4 mb-8 bg-indigo-600 rounded-lg`}
               onPress={handleResetPassword}
             >
-              <Text style={tw`text-white font-medium text-lg`}>
-                {t("utils.confirm")}
-              </Text>
+              <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
 
             <SuccessOrError message={message} />
