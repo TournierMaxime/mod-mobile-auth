@@ -37,6 +37,7 @@ const LoginScreen = () => {
     widthAspectRatio,
     placeholder,
     btnSubmit,
+    authBtn,
   } = useResponsive()
 
   const { onAppleButtonPress, appleMessage, isProcessingApple } =
@@ -55,6 +56,8 @@ const LoginScreen = () => {
   const handleForgetPassword = () => {
     navigation.navigate("ForgetPassword")
   }
+
+  const logo = require("../../../../assets/images/videotek_logo.webp")
 
   return (
     <ScrollView style={tw`flex ${background} h-full`}>
@@ -79,7 +82,7 @@ const LoginScreen = () => {
                     width: Utils.moderateScale(280),
                     height: Utils.moderateScale(80),
                   }}
-                  source={require("../../../../assets/images/videotek_logo.webp")}
+                  source={logo}
                 />
               </View>
               <TouchableOpacity onPress={() => navigation.navigate("Register")}>
@@ -144,7 +147,7 @@ const LoginScreen = () => {
                   onPress={() => loginWithGoogle()}
                 >
                   <GoogleSVG />
-                  <Text style={fontSize(text)}>
+                  <Text style={authBtn()}>
                     {t("utils.continueWith")} Google
                   </Text>
                 </TouchableOpacity>
@@ -160,7 +163,7 @@ const LoginScreen = () => {
                     onPress={() => onAppleButtonPress()}
                   >
                     <AppleSVG />
-                    <Text style={fontSize(text)}>
+                    <Text style={authBtn()}>
                       {t("utils.continueWith")} Apple
                     </Text>
                   </TouchableOpacity>
