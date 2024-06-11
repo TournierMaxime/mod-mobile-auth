@@ -14,7 +14,6 @@ import { useTranslation } from "react-i18next"
 import tw from "twrnc"
 import GoogleSVG from "../../../../assets/images/GoogleSVG"
 import AppleSVG from "../../../../assets/icon/AppleSVG"
-import Message from "@mod/mobile-common/lib/components/utils/Message"
 import useHandleLogin from "../../lib/hooks/auth/useHandleLogin"
 import useHandleAuthGoogle from "../../lib/hooks/auth/useHandleAuthGoogle"
 import { useSelector } from "react-redux"
@@ -28,7 +27,7 @@ const LoginScreen = () => {
 
   const { i18n, t } = useTranslation()
 
-  const { handleLogin, data, setData, message } = useHandleLogin({ navigation })
+  const { handleLogin, data, setData } = useHandleLogin({ navigation })
 
   const {
     fontSize,
@@ -40,10 +39,12 @@ const LoginScreen = () => {
     authBtn,
   } = useResponsive()
 
-  const { onAppleButtonPress, appleMessage, isProcessingApple } =
-    useHandleAuthApple({ i18n, navigation })
+  const { onAppleButtonPress, isProcessingApple } = useHandleAuthApple({
+    i18n,
+    navigation,
+  })
 
-  const { loginWithGoogle, googleMessage, isProcessing } = useHandleAuthGoogle({
+  const { loginWithGoogle, isProcessing } = useHandleAuthGoogle({
     i18n,
     navigation,
   })
@@ -65,12 +66,10 @@ const LoginScreen = () => {
         {isProcessing ? (
           <View style={tw`flex justify-center items-center`}>
             <ActivityIndicator size={"large"} />
-            <Message priority={"info"} message={googleMessage.info} />
           </View>
         ) : isProcessingApple ? (
           <View style={tw`flex justify-center items-center`}>
             <ActivityIndicator size={"large"} />
-            <Message priority={"info"} message={appleMessage.info} />
           </View>
         ) : (
           <Fragment>
@@ -108,18 +107,6 @@ const LoginScreen = () => {
                 secureTextEntry={true}
                 style={placeholder()}
               />
-
-              {message.error ? (
-                <Message priority={"error"} message={message.error} />
-              ) : null}
-
-              {googleMessage.error ? (
-                <Message priority={"error"} message={googleMessage.error} />
-              ) : null}
-
-              {appleMessage.error ? (
-                <Message priority={"error"} message={appleMessage.error} />
-              ) : null}
 
               <TouchableOpacity onPress={handleForgetPassword}>
                 <Text style={forgotYourPassword(text)}>

@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next"
 import tw from "twrnc"
 import useHandleForgetPassword from "../../lib/hooks/auth/useHandleForgetPassword"
 import useOnChange from "@mod/mobile-common/lib/hooks/utils/useOnChange"
-import SuccessOrError from "@mod/mobile-common/lib/components/utils/SuccessOrError"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
@@ -18,7 +17,6 @@ const ForgetPasswordScreen = () => {
     handleCheckForgetPasswordCode,
     handleForgetPassword,
     handleResetPassword,
-    message,
     step,
   } = useHandleForgetPassword()
 
@@ -50,8 +48,6 @@ const ForgetPasswordScreen = () => {
             >
               <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
-
-            <SuccessOrError message={message} />
           </View>
         )}
         {step === 2 && (
@@ -76,8 +72,6 @@ const ForgetPasswordScreen = () => {
             >
               <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
-
-            <SuccessOrError message={message} />
           </View>
         )}
 
@@ -109,13 +103,6 @@ const ForgetPasswordScreen = () => {
             >
               <Text style={btnSubmit()}>{t("utils.confirm")}</Text>
             </TouchableOpacity>
-
-            <SuccessOrError message={message} />
-          </View>
-        )}
-        {step === 4 && (
-          <View style={tw`${background} p-4 rounded-md h-full`}>
-            <SuccessOrError message={message} />
           </View>
         )}
       </View>
