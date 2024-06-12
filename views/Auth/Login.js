@@ -1,7 +1,6 @@
 import React, { Fragment } from "react"
 import {
   View,
-  TextInput,
   TouchableOpacity,
   Text,
   ScrollView,
@@ -14,42 +13,32 @@ import { useTranslation } from "react-i18next"
 import tw from "twrnc"
 import GoogleSVG from "../../../../assets/images/GoogleSVG"
 import AppleSVG from "../../../../assets/icon/AppleSVG"
-import useHandleLogin from "../../lib/hooks/auth/useHandleLogin"
 import useHandleAuthGoogle from "../../lib/hooks/auth/useHandleAuthGoogle"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import Utils from "@mod/mobile-common/lib/class/Utils"
 import useHandleAuthApple from "../../lib/hooks/auth/useHandleAuthApple"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
+import StepAuth from "./StepAuth"
 
 const LoginScreen = () => {
   const navigation = useNavigation()
 
   const { i18n, t } = useTranslation()
 
-  const { handleLogin, data, setData } = useHandleLogin({ navigation })
-
-  const {
-    fontSize,
-    notRegistered,
-    forgotYourPassword,
-    widthAspectRatio,
-    placeholder,
-    btnSubmit,
-    authBtn,
-  } = useResponsive()
+  const { forgotYourPassword, widthAspectRatio, authBtn } = useResponsive()
 
   const { onAppleButtonPress, isProcessingApple } = useHandleAuthApple({
     i18n,
+    t,
     navigation,
   })
 
   const { loginWithGoogle, isProcessing } = useHandleAuthGoogle({
     i18n,
+    t,
     navigation,
   })
-
-  const loading = useSelector((state) => state.auth.loading)
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { background, text } = useDynamicThemeStyles(darkMode)
@@ -84,45 +73,15 @@ const LoginScreen = () => {
                   source={logo}
                 />
               </View>
-              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                <Text style={notRegistered(text)}>
-                  {t("utils.notRegistered")}
-                </Text>
-              </TouchableOpacity>
             </View>
 
             <View style={widthAspectRatio()}>
-              <Text style={fontSize(text)}>{t("utils.email")}</Text>
-              <TextInput
-                placeholder={t("utils.email")}
-                onChangeText={(text) => setData({ ...data, email: text })}
-                value={data.email}
-                style={placeholder()}
-              />
-              <Text style={fontSize(text)}>{t("utils.password")}</Text>
-              <TextInput
-                placeholder={t("utils.password")}
-                onChangeText={(text) => setData({ ...data, password: text })}
-                value={data.password}
-                secureTextEntry={true}
-                style={placeholder()}
-              />
+              <StepAuth />
 
               <TouchableOpacity onPress={handleForgetPassword}>
                 <Text style={forgotYourPassword(text)}>
                   {t("utils.forgotYourPassword")}
                 </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={tw`flex-row justify-center mt-4 mb-8 bg-indigo-600 rounded-lg`}
-                onPress={handleLogin}
-              >
-                {loading ? (
-                  <ActivityIndicator size={"large"} />
-                ) : (
-                  <Text style={btnSubmit()}>{t("utils.signIn")}</Text>
-                )}
               </TouchableOpacity>
             </View>
             <View style={widthAspectRatio()}>

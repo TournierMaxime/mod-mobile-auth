@@ -2,7 +2,6 @@ import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import Header from "@mod/mobile-common/lib/components/layout/Header"
 import Login from "@mod/mobile-auth/views/Auth/Login"
-import Register from "@mod/mobile-auth/views/Auth/Register"
 import ForgetPassword from "@mod/mobile-auth/views/Auth/ForgetPassword"
 import ConfirmEmail from "@mod/mobile-auth/views/Auth/ConfirmEmail"
 
@@ -30,20 +29,6 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
         })}
       >
         {(props) => <Login {...props} i18n={i18n} t={t} />}
-      </AuthStack.Screen>
-      <AuthStack.Screen
-        name="Register"
-        options={() => ({
-          header: () => (
-            <Header
-              isAuthenticated={isAuthenticated}
-              backButton={true}
-              title={t("utils.signUp")}
-            />
-          ),
-        })}
-      >
-        {(props) => <Register {...props} i18n={i18n} t={t} />}
       </AuthStack.Screen>
       <AuthStack.Screen
         name="ForgetPassword"
