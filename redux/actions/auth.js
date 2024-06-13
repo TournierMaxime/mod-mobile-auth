@@ -89,7 +89,6 @@ const forgetPassword = (email) => async (dispatch) => {
     return response.data
   } catch (error) {
     dispatch({ type: "FORGET_PASSWORD_FAILURE", payload: error.message })
-    console.log(error)
     throw error
   }
 }
@@ -108,7 +107,6 @@ const checkForgetPasswordCode = (data) => async (dispatch) => {
       type: "CHECK_FORGET_PASSWORD_CODE_FAILURE",
       payload: error.message,
     })
-    console.log(error)
     throw error
   }
 }
@@ -150,11 +148,9 @@ const setUserWithLocalStorage = (localStorageData) => async (dispatch) => {
       type: "SET_USER_LOCALSTORAGE_SUCCESS",
       payload: localStorageData,
     })
-    console.log("Action", localStorageData)
     return localStorageData
   } catch (error) {
     dispatch({ type: "SET_USER_LOCALSTORAGE_FAILURE", payload: error })
-    console.log(error)
     throw error
   }
 }

@@ -17,8 +17,6 @@ const StepAuth = () => {
     setData,
   } = useHandleAuth()
 
-  console.log("existingUser", existingUser)
-
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { text } = useDynamicThemeStyles(darkMode)
 
@@ -27,8 +25,6 @@ const StepAuth = () => {
   const { fontSize, placeholder, btnSubmit } = useResponsive()
 
   const [step, setStep] = useState(1)
-
-  console.log("step", step)
 
   const renderForm = () => {
     switch (step) {
