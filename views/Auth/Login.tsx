@@ -8,7 +8,7 @@ import {
   Image,
   Platform,
 } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import tw from "twrnc"
 import GoogleSVG from "../../../../assets/images/GoogleSVG"
@@ -20,27 +20,26 @@ import Utils from "@mod/mobile-common/lib/class/Utils"
 import useHandleAuthApple from "../../lib/hooks/auth/useHandleAuthApple"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
 import StepAuth from "./StepAuth"
+import { RootState } from "../../../../redux/store"
+import { AuthStackParamList } from "../../navigators/AuthStackNavigator"
 
-const LoginScreen = () => {
-  const navigation = useNavigation()
+interface LoginProps {
+  i18n: any
+  t: any
+  navigation: NavigationProp<AuthStackParamList, "Login">
+}
 
-  const { i18n, t } = useTranslation()
+const LoginScreen: React.FC<LoginProps> = () => {
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
+  const { t } = useTranslation()
 
   const { forgotYourPassword, widthAspectRatio, authBtn } = useResponsive()
 
-  const { onAppleButtonPress, isProcessingApple } = useHandleAuthApple({
-    i18n,
-    t,
-    navigation,
-  })
+  const { onAppleButtonPress, isProcessingApple } = useHandleAuthApple()
 
-  const { loginWithGoogle, isProcessing } = useHandleAuthGoogle({
-    i18n,
-    t,
-    navigation,
-  })
+  const { loginWithGoogle, isProcessing } = useHandleAuthGoogle()
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
   const { background, text } = useDynamicThemeStyles(darkMode)
 
   const handleForgetPassword = () => {

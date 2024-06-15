@@ -5,9 +5,23 @@ import Login from "@mod/mobile-auth/views/Auth/Login"
 import ForgetPassword from "@mod/mobile-auth/views/Auth/ForgetPassword"
 import ConfirmEmail from "@mod/mobile-auth/views/Auth/ConfirmEmail"
 
-const AuthStack = createNativeStackNavigator()
+export type AuthStackParamList = {
+  Login: undefined
+  ForgetPassword: undefined
+  ConfirmEmail: { userId: string }
+  MainStackNavigator: { screen: string; params: {} | null }
+}
 
-const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
+const AuthStack = createNativeStackNavigator<AuthStackParamList>()
+
+interface Props {
+  isAuthenticated: boolean
+  i18n: any
+  t: any
+  route: {}
+}
+
+const AuthStackNavigator: React.FC<Props> = ({ isAuthenticated, i18n, t }) => {
   return (
     <AuthStack.Navigator
       screenOptions={{
@@ -24,6 +38,7 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
               isAuthenticated={isAuthenticated}
               backButton={false}
               title={t("utils.signIn")}
+              type={null}
             />
           ),
         })}
@@ -38,6 +53,7 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
               isAuthenticated={isAuthenticated}
               backButton={true}
               title={t("utils.forgotYourPassword")}
+              type={null}
             />
           ),
         })}
@@ -46,12 +62,14 @@ const AuthStackNavigator = ({ isAuthenticated, i18n, t }) => {
       </AuthStack.Screen>
       <AuthStack.Screen
         name="ConfirmEmail"
-        options={() => ({
+        options={({ route }) => ({
+          userId: route.params.userId,
           header: () => (
             <Header
               isAuthenticated={isAuthenticated}
               backButton={false}
               title={t("utils.confirm") + " Email"}
+              type={null}
             />
           ),
         })}

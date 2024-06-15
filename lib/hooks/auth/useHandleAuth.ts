@@ -4,25 +4,34 @@ import { searchUsers } from "@mod/mobile-user/redux/actions/users"
 import { useState } from "react"
 import { toast } from "@mod/mobile-common/lib/toast"
 import { useTranslation } from "react-i18next"
-import { useNavigation } from "@react-navigation/native"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 import registerForPushNotificationsAsync from "@mod/mobile-common/lib/components/utils/Notifications"
+import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
+import { AppDispatch } from "../../../../../redux/store"
+
+interface DataState {
+  email: string
+  password: string
+  pseudo: string
+  expoPushToken?: string
+}
 
 const useHandleAuth = () => {
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const dispatch: AppDispatch = useDispatch()
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
 
   const { t, i18n } = useTranslation()
   const language = i18n.language
   const lang = language.slice(0, 2)
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<DataState>({
     email: "",
     password: "",
     pseudo: "",
     expoPushToken: "",
   })
 
-  const [existingUser, setExistingUser] = useState(false)
+  const [existingUser, setExistingUser] = useState<boolean>(false)
 
   const searchUser = toast(async () => {
     try {
@@ -34,8 +43,8 @@ const useHandleAuth = () => {
         }),
       )
       if (response && response.users.length > 0) setExistingUser(true)
-    } catch (error) {
-      throw new Error(error)
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   })
 
@@ -50,14 +59,16 @@ const useHandleAuth = () => {
       ).then(() => {
         navigation.navigate("MainStackNavigator", {
           screen: "Home",
+          params: {},
         })
       })
-    } catch (error) {
-      throw new Error(error.response.data.errMsg)
+    } catch (error: any) {
+      throw new Error(error.message)
     }
     setData({
       email: "",
       password: "",
+      pseudo: "",
     })
     return {
       toastMessage: t("actions.successfullyConnected"),
@@ -73,16 +84,20 @@ const useHandleAuth = () => {
       }
 
       await dispatch(register({ ...data, lang, expoPushToken: token })).then(
-        (response) => {
+        (response: any) => {
           navigation.navigate("ConfirmEmail", {
             userId: response.user.userId,
           })
         },
       )
-    } catch (error) {
-      throw new Error(error)
+    } catch (error: any) {
+      throw new Error(error.message)
     }
-    setData({})
+    setData({
+      email: "",
+      password: "",
+      pseudo: "",
+    })
     return {
       toastMessage: t("actions.yourAccountHasBeenCreated"),
     }

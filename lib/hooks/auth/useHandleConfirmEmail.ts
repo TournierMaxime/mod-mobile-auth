@@ -2,14 +2,24 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { loginUser, confirmEmail } from "../../../redux/actions/auth"
 import { useDispatch } from "react-redux"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, NavigationProp } from "@react-navigation/native"
 import { toast } from "@mod/mobile-common/lib/toast"
+import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
+import { AppDispatch } from "../../../../../redux/store"
 
-const useHandleConfirmEmail = ({ userId }) => {
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
+interface DataState {
+  verificationCode: number | null
+}
 
-  const [data, setData] = useState({ verificationCode: null })
+interface HandleConfirmEmailProps {
+  userId: string
+}
+
+const useHandleConfirmEmail = ({ userId }: HandleConfirmEmailProps) => {
+  const dispatch: AppDispatch = useDispatch()
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
+
+  const [data, setData] = useState<DataState>({ verificationCode: null })
 
   const { t } = useTranslation()
 
@@ -20,13 +30,17 @@ const useHandleConfirmEmail = ({ userId }) => {
       await dispatch(loginUser({ userId })).then(() => {
         navigation.navigate("MainStackNavigator", {
           screen: "UserProfile",
-          userId,
+          params: {
+            userId,
+          },
         })
       })
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.response.data.errMsg)
     }
-    setData({})
+    setData({
+      verificationCode: null,
+    })
     return {
       toastMessage: t("actions.yourAccountHasBeenSuccessfullyVerified"),
     }

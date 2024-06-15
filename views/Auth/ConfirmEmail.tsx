@@ -7,8 +7,18 @@ import useHandleConfirmEmail from "../../lib/hooks/auth/useHandleConfirmEmail"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
+import { RootState } from "../../../../redux/store"
+import { AuthStackParamList } from "../../navigators/AuthStackNavigator"
+import { NavigationProp } from "@react-navigation/native"
 
-const ConfirmEmail = ({ route }) => {
+interface ConfirmEmailProps {
+  i18n: any
+  t: any
+  navigation: NavigationProp<AuthStackParamList, "ConfirmEmail">
+  route: any
+}
+
+const ConfirmEmail: React.FC<ConfirmEmailProps> = ({ route }) => {
   const { userId } = route.params
 
   const { handleConfirmEmail, data, setData } = useHandleConfirmEmail({
@@ -21,7 +31,7 @@ const ConfirmEmail = ({ route }) => {
 
   const { t } = useTranslation()
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
   const { background, text } = useDynamicThemeStyles(darkMode)
 
   return (
@@ -35,7 +45,11 @@ const ConfirmEmail = ({ route }) => {
             onChangeText={(value) =>
               onChange({ name: "verificationCode", value: Number(value) })
             }
-            value={data.verificationCode}
+            value={
+              data.verificationCode !== null
+                ? data.verificationCode.toString()
+                : ""
+            }
             keyboardType="numeric"
             maxLength={6}
           />

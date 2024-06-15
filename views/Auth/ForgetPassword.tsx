@@ -7,8 +7,17 @@ import useOnChange from "@mod/mobile-common/lib/hooks/utils/useOnChange"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
+import { RootState } from "../../../../redux/store"
+import { AuthStackParamList } from "../../navigators/AuthStackNavigator"
+import { NavigationProp } from "@react-navigation/native"
 
-const ForgetPasswordScreen = () => {
+interface ForgetPasswordProps {
+  i18n: any
+  t: any
+  navigation: NavigationProp<AuthStackParamList, "ForgetPassword">
+}
+
+const ForgetPasswordScreen: React.FC<ForgetPasswordProps> = () => {
   const { t } = useTranslation()
 
   const {
@@ -22,7 +31,7 @@ const ForgetPasswordScreen = () => {
 
   const { onChange } = useOnChange({ data, setData })
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
   const { background, text } = useDynamicThemeStyles(darkMode)
 
   const { fontSize, widthAspectRatio, placeholder, btnSubmit } = useResponsive()
@@ -58,7 +67,7 @@ const ForgetPasswordScreen = () => {
             <TextInput
               placeholder={t("utils.verificationCode")}
               style={placeholder()}
-              value={data.code}
+              value={data.code !== null ? data.code.toString() : ""}
               maxLength={6}
               keyboardType="numeric"
               onChangeText={(value) =>

@@ -7,9 +7,16 @@ import { useDispatch } from "react-redux"
 import { useState } from "react"
 import registerForPushNotificationsAsync from "@mod/mobile-common/lib/components/utils/Notifications"
 import { toast } from "@mod/mobile-common/lib/toast"
+import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
+import { AppDispatch } from "../../../../../redux/store"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { useTranslation } from "react-i18next"
 
-const useHandleAuthGoogle = ({ i18n, t, navigation }) => {
-  const dispatch = useDispatch()
+const useHandleAuthGoogle = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
+
+  const { t, i18n } = useTranslation()
 
   const language = i18n.language
   const lang = language.slice(0, 2)
@@ -64,6 +71,7 @@ const useHandleAuthGoogle = ({ i18n, t, navigation }) => {
         await dispatch(loginUser({ userId })).then(() => {
           navigation.navigate("MainStackNavigator", {
             screen: "Home",
+            params: {},
           })
         })
 
@@ -81,17 +89,18 @@ const useHandleAuthGoogle = ({ i18n, t, navigation }) => {
             expoPushToken: token,
             lang,
           }),
-        ).then((response) => {
+        ).then((response: any) => {
           dispatch(loginUser({ userId: response.user.userId })).then(() => {
             navigation.navigate("MainStackNavigator", {
               screen: "Home",
+              params: {},
             })
           })
         })
 
         setIsProcessing(false)
       }
-    } catch (error) {
+    } catch (error: any) {
       setIsProcessing(false)
       throw new Error(error)
     }

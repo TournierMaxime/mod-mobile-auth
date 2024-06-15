@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, NavigationProp } from "@react-navigation/native"
 import { useDispatch } from "react-redux"
 import {
   forgetPassword,
@@ -9,14 +9,23 @@ import {
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "@mod/mobile-common/lib/toast"
+import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
+import { AppDispatch } from "../../../../../redux/store"
+
+interface DataState {
+  email: string
+  code: number | null
+  password: string
+  confirmPassword: string
+}
 
 const useHandleForgetPassword = () => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState<number>(1)
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<DataState>({
     email: "",
     code: null,
     password: "",
@@ -31,7 +40,7 @@ const useHandleForgetPassword = () => {
     try {
       await dispatch(forgetPassword({ email: data.email, lang }))
       setStep(2)
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.response.data.errMsg)
     }
     return {
@@ -45,7 +54,7 @@ const useHandleForgetPassword = () => {
         checkForgetPasswordCode({ email: data.email, code: data.code }),
       )
       setStep(3)
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.response.data.errMsg)
     }
     setData({
@@ -65,14 +74,15 @@ const useHandleForgetPassword = () => {
           password: data.password,
           confirmPassword: data.confirmPassword,
         }),
-      ).then((response) => {
+      ).then((response: any) => {
         dispatch(loginUser({ userId: response.userId })).then(() => {
           navigation.navigate("MainStackNavigator", {
             screen: "Home",
+            params: {},
           })
         })
       })
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.response.data.errMsg)
     }
     setData({

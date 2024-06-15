@@ -8,10 +8,10 @@
   "author": "",
   "license": "ISC",
   "exports": {
-    "./lib/*": "./lib/*.js",
-    "./redux/*": "./redux/*.js",
-    "./views/*": "./views/*.js",
-    "./navigators/*": "./navigators/*.js"
+    "./lib/*": "./lib/*.ts",
+    "./redux/*": "./redux/*.ts",
+    "./views/*": "./views/*.tsx",
+    "./navigators/*": "./navigators/*.tsx"
   },
   "dependencies": {
     "@mod/mobile-common": "file:../mod-mobile-common",

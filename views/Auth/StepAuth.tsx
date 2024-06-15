@@ -6,8 +6,9 @@ import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import { useTranslation } from "react-i18next"
 import tw from "twrnc"
+import { RootState } from "../../../../redux/store"
 
-const StepAuth = () => {
+const StepAuth: React.FC = () => {
   const {
     handleLogin,
     handleRegister,
@@ -17,7 +18,7 @@ const StepAuth = () => {
     setData,
   } = useHandleAuth()
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
   const { text } = useDynamicThemeStyles(darkMode)
 
   const { t } = useTranslation()
