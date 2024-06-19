@@ -1,5 +1,3 @@
-import { ThunkAction } from "redux-thunk"
-import { RootState } from "../../../../redux/store"
 import {
   Login,
   Logout,
@@ -10,6 +8,7 @@ import {
   ResetPasswordMobile,
   Register,
 } from "../../../../services/auth"
+import { AppThunk } from "../../../../store"
 
 // Define action types
 export const LOGIN_USER_REQUEST = "LOGIN_USER_REQUEST"
@@ -210,7 +209,7 @@ type AuthActionTypes =
 
 // Thunk actions
 const loginUser =
-  (data: any): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: LOGIN_USER_REQUEST })
@@ -229,31 +228,26 @@ const loginUser =
     }
   }
 
-const logoutUser =
-  (): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: LOGOUT_USER_REQUEST })
-      const response = await Logout()
-      dispatch({
-        type: LOGOUT_USER_SUCCESS,
-        payload: {},
-      })
-      return {}
-    } catch (error: any) {
-      dispatch({
-        type: LOGOUT_USER_FAILURE,
-        payload: error.message,
-      })
-      throw new Error(error.message)
-    }
+const logoutUser = (): AppThunk<Promise<any>> => async (dispatch) => {
+  try {
+    dispatch({ type: LOGOUT_USER_REQUEST })
+    await Logout()
+    dispatch({
+      type: LOGOUT_USER_SUCCESS,
+      payload: {},
+    })
+    return {}
+  } catch (error: any) {
+    dispatch({
+      type: LOGOUT_USER_FAILURE,
+      payload: error.message,
+    })
+    throw new Error(error.message)
   }
+}
 
 const confirmEmail =
-  (
-    userId: string,
-    data: any,
-  ): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (userId: string, data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: CONFIRM_EMAIL_REQUEST })
@@ -273,9 +267,7 @@ const confirmEmail =
   }
 
 const verifyAppleToken =
-  (
-    identityToken: string,
-  ): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (identityToken: string): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: VERIFY_APPLE_TOKEN_REQUEST })
@@ -295,7 +287,7 @@ const verifyAppleToken =
   }
 
 const forgetPassword =
-  (data: any): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: FORGET_PASSWORD_REQUEST })
@@ -309,7 +301,7 @@ const forgetPassword =
   }
 
 const checkForgetPasswordCode =
-  (data: any): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: CHECK_FORGET_PASSWORD_CODE_REQUEST })
@@ -329,7 +321,7 @@ const checkForgetPasswordCode =
   }
 
 const resetPassword =
-  (data: any): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: RESET_PASSWORD_REQUEST })
@@ -343,7 +335,7 @@ const resetPassword =
   }
 
 const register =
-  (data: any): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: REGISTER_USER_REQUEST })
@@ -363,9 +355,7 @@ const register =
   }
 
 const setUserWithLocalStorage =
-  (
-    localStorageData: any,
-  ): ThunkAction<void, RootState, unknown, AuthActionTypes> =>
+  (localStorageData: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: SET_USER_LOCALSTORAGE_REQUEST })

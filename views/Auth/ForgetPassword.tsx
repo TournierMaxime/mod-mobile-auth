@@ -7,7 +7,7 @@ import useOnChange from "@mod/mobile-common/lib/hooks/utils/useOnChange"
 import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
-import { RootState } from "../../../../redux/store"
+import { RootState } from "../../../../store"
 import { AuthStackParamList } from "../../navigators/AuthStackNavigator"
 import { NavigationProp } from "@react-navigation/native"
 

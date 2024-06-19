@@ -10,13 +10,10 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "@mod/mobile-common/lib/toast"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
-import { AppDispatch } from "../../../../../redux/store"
+import { AppDispatch } from "../../../../../store"
 
-interface DataState {
-  email: string
-  code: number | null
-  password: string
-  confirmPassword: string
+type FormData = {
+  [key: string]: any
 }
 
 const useHandleForgetPassword = () => {
@@ -25,7 +22,7 @@ const useHandleForgetPassword = () => {
 
   const [step, setStep] = useState<number>(1)
 
-  const [data, setData] = useState<DataState>({
+  const [data, setData] = useState<FormData>({
     email: "",
     code: null,
     password: "",

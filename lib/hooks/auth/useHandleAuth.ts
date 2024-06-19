@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import registerForPushNotificationsAsync from "@mod/mobile-common/lib/components/utils/Notifications"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
-import { AppDispatch } from "../../../../../redux/store"
+import { AppDispatch } from "../../../../../store"
 
 interface DataState {
   email: string

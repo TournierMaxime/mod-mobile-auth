@@ -8,7 +8,7 @@ import { useState } from "react"
 import registerForPushNotificationsAsync from "@mod/mobile-common/lib/components/utils/Notifications"
 import { toast } from "@mod/mobile-common/lib/toast"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
-import { AppDispatch } from "../../../../../redux/store"
+import { AppDispatch } from "../../../../../store"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 

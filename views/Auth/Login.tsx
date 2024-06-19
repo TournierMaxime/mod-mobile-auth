@@ -20,7 +20,7 @@ import Utils from "@mod/mobile-common/lib/class/Utils"
 import useHandleAuthApple from "../../lib/hooks/auth/useHandleAuthApple"
 import useResponsive from "@mod/mobile-common/lib/hooks/utils/useResponsive"
 import StepAuth from "./StepAuth"
-import { RootState } from "../../../../redux/store"
+import { RootState } from "../../../../store"
 import { AuthStackParamList } from "../../navigators/AuthStackNavigator"
 
 interface LoginProps {

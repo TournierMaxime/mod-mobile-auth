@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { useDynamicThemeStyles } from "@mod/mobile-common/styles/theme"
 import { useTranslation } from "react-i18next"
 import tw from "twrnc"
-import { RootState } from "../../../../redux/store"
+import { RootState } from "../../../../store"
 
 const StepAuth: React.FC = () => {
   const {

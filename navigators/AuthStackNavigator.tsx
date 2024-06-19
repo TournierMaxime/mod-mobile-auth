@@ -10,6 +10,7 @@ export type AuthStackParamList = {
   ForgetPassword: undefined
   ConfirmEmail: { userId: string }
   MainStackNavigator: { screen: string; params: {} | null }
+  AuthStackNavigator: { screen: string }
 }
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
@@ -18,7 +19,6 @@ interface Props {
   isAuthenticated: boolean
   i18n: any
   t: any
-  route: {}
 }
 
 const AuthStackNavigator: React.FC<Props> = ({ isAuthenticated, i18n, t }) => {
@@ -38,7 +38,7 @@ const AuthStackNavigator: React.FC<Props> = ({ isAuthenticated, i18n, t }) => {
               isAuthenticated={isAuthenticated}
               backButton={false}
               title={t("utils.signIn")}
-              type={null}
+              type={""}
             />
           ),
         })}
@@ -53,7 +53,7 @@ const AuthStackNavigator: React.FC<Props> = ({ isAuthenticated, i18n, t }) => {
               isAuthenticated={isAuthenticated}
               backButton={true}
               title={t("utils.forgotYourPassword")}
-              type={null}
+              type={""}
             />
           ),
         })}
@@ -69,7 +69,7 @@ const AuthStackNavigator: React.FC<Props> = ({ isAuthenticated, i18n, t }) => {
               isAuthenticated={isAuthenticated}
               backButton={false}
               title={t("utils.confirm") + " Email"}
-              type={null}
+              type={""}
             />
           ),
         })}

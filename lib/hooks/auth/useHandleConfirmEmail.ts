@@ -5,10 +5,10 @@ import { useDispatch } from "react-redux"
 import { useNavigation, NavigationProp } from "@react-navigation/native"
 import { toast } from "@mod/mobile-common/lib/toast"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
-import { AppDispatch } from "../../../../../redux/store"
+import { AppDispatch } from "../../../../../store"
 
-interface DataState {
-  verificationCode: number | null
+type FormData = {
+  [key: string]: any
 }
 
 interface HandleConfirmEmailProps {
@@ -17,9 +17,10 @@ interface HandleConfirmEmailProps {
 
 const useHandleConfirmEmail = ({ userId }: HandleConfirmEmailProps) => {
   const dispatch: AppDispatch = useDispatch()
+
   const navigation = useNavigation<NavigationProp<AuthStackParamList>>()
 
-  const [data, setData] = useState<DataState>({ verificationCode: null })
+  const [data, setData] = useState<FormData>({ verificationCode: null })
 
   const { t } = useTranslation()
 
