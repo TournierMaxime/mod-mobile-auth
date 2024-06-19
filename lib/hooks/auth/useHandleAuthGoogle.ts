@@ -11,6 +11,7 @@ import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
 import { AppDispatch } from "../../../../../store"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import { NODE_ENV } from "@env"
 
 const useHandleAuthGoogle = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -77,7 +78,10 @@ const useHandleAuthGoogle = () => {
 
         setIsProcessing(false)
       } else {
-        const token = await registerForPushNotificationsAsync()
+        let token
+        if (NODE_ENV === "production") {
+          token = await registerForPushNotificationsAsync()
+        }
         await dispatch(
           register({
             pseudo: userData.name,

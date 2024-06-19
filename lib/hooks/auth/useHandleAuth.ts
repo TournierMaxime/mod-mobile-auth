@@ -8,6 +8,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native"
 import registerForPushNotificationsAsync from "@mod/mobile-common/lib/components/utils/Notifications"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
 import { AppDispatch } from "../../../../../store"
+import { NODE_ENV } from "@env"
 
 interface DataState {
   email: string
@@ -77,7 +78,10 @@ const useHandleAuth = () => {
 
   const handleRegister = toast(async () => {
     try {
-      const token = await registerForPushNotificationsAsync()
+      let token
+      if (NODE_ENV === "production") {
+        token = await registerForPushNotificationsAsync()
+      }
 
       if (!data.pseudo || !data.email || !data.password) {
         throw new Error(t("errors.allFieldsAreMandatory"))

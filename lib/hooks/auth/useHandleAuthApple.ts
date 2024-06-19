@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next"
 import { AppDispatch } from "../../../../../store"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { AuthStackParamList } from "../../../navigators/AuthStackNavigator"
+import { NODE_ENV } from "@env"
 
 const useHandleAuthApple = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -67,7 +68,10 @@ const useHandleAuthApple = () => {
 
         setIsProcessingApple(false)
       } else {
-        const token = await registerForPushNotificationsAsync()
+        let token
+        if (NODE_ENV === "production") {
+          token = await registerForPushNotificationsAsync()
+        }
 
         await dispatch(
           register({
