@@ -267,11 +267,11 @@ const confirmEmail =
   }
 
 const verifyAppleToken =
-  (identityToken: string): AppThunk<Promise<any>> =>
+  (data: any): AppThunk<Promise<any>> =>
   async (dispatch) => {
     try {
       dispatch({ type: VERIFY_APPLE_TOKEN_REQUEST })
-      const response = await VerifyAppleToken(identityToken)
+      const response = await VerifyAppleToken(data)
       dispatch({
         type: VERIFY_APPLE_TOKEN_SUCCESS,
         payload: response.data,

@@ -1,6 +1,4 @@
-import AppleAuthentication, {
-  AppleAuthenticationCredential,
-} from "expo-apple-authentication"
+import * as AppleAuthentication from "expo-apple-authentication"
 import { useState } from "react"
 import { searchUsers } from "@mod/mobile-user/redux/actions/users"
 import { useDispatch } from "react-redux"
@@ -31,7 +29,7 @@ const useHandleAuthApple = () => {
     setIsProcessingApple(true)
     let users
     try {
-      const credential: AppleAuthenticationCredential =
+      const credential: AppleAuthentication.AppleAuthenticationCredential =
         await AppleAuthentication.signInAsync({
           requestedScopes: [
             AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -44,7 +42,7 @@ const useHandleAuthApple = () => {
       }
 
       const appleToken = await dispatch(
-        verifyAppleToken(credential.identityToken),
+        verifyAppleToken({ identityToken: credential.identityToken }),
       )
 
       if (appleToken) {
@@ -96,10 +94,7 @@ const useHandleAuthApple = () => {
       }
     } catch (error: any) {
       setIsProcessingApple(false)
-      throw new Error(
-        error.message ||
-          "An error occurred during the Apple authentication process",
-      )
+      throw new Error(error.message)
     }
     return {
       toastMessage: t("actions.youAreNowLoggedWithYourAppleAccount"),
